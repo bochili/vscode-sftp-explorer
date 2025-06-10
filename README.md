@@ -5,7 +5,7 @@
   <p>在 VS Code 中无缝管理远程服务器文件，提供完整的 SFTP 支持</p>
   
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Visual Studio Marketplace](https://img.shields.io/badge/VS%20Code-Extension-blue.svg)](https://marketplace.visualstudio.com/items?itemName=sftp-explorer.sftp-explorer)
+  [![Visual Studio Marketplace](https://img.shields.io/badge/VS%20Code-Extension-blue.svg)](https://marketplace.visualstudio.com/items?itemName=bochili.vscode-sftp-explorer)
   [![GitHub issues](https://img.shields.io/github/issues/bochili/vscode-sftp-explorer)](https://github.com/bochili/vscode-sftp-explorer/issues)
   [![GitHub stars](https://img.shields.io/github/stars/bochili/vscode-sftp-explorer)](https://github.com/bochili/vscode-sftp-explorer/stargazers)
 </div>
