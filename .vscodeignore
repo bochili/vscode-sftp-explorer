@@ -1,0 +1,72 @@
+# VS Code配置和测试文件
+.vscode/**
+.vscode-test/**
+**/.vscode-test.*
+
+# 源代码文件（已编译到dist）
+src/**
+out/**
+
+node_modules/@types/**
+
+
+# 但排除所有子依赖的文档、测试等非必要文件
+node_modules/**/test/**
+node_modules/**/tests/**
+node_modules/**/docs/**
+node_modules/**/doc/**
+node_modules/**/examples/**
+node_modules/**/example/**
+node_modules/**/*.md
+node_modules/**/LICENSE*
+node_modules/**/CHANGELOG*
+node_modules/**/*.ts
+node_modules/**/*.map
+node_modules/**/tsconfig.json
+node_modules/**/package-lock.json
+node_modules/**/yarn.lock
+
+# 构建和配置文件
+.gitignore
+.yarnrc
+.npmrc
+webpack.config.js
+vsc-extension-quickstart.md
+tsconfig.json
+eslint.config.mjs
+
+# TypeScript源码映射和声明文件
+**/*.map
+**/*.ts
+!**/*.d.ts
+
+# 测试相关文件
+**/test/**
+**/tests/**
+**/*.test.*
+**/*.spec.*
+
+# 各种配置文件
+.editorconfig
+.prettierrc*
+.eslintrc*
+.gitattributes
+
+# 日志和临时文件
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.local
+.env.*.local
+
+# 包管理器文件
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# 保留必要的插件文件
+!icon.png
+!README.md
+!CHANGELOG.md
+!LICENSE

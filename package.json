@@ -1,0 +1,367 @@
+{
+  "name": "vscode-sftp-explorer",
+  "displayName": "SFTP Explorer",
+  "description": "SFTP文件浏览器插件 - 基于SSH协议在VS Code中安全管理远程服务器文件",
+  "version": "0.0.1",
+  "publisher": "bochili",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bochili/vscode-sftp-explorer.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:sftpExplorer",
+    "onCommand:sftpExplorer.refresh",
+    "onCommand:sftpExplorer.addConnection",
+    "onCommand:sftpExplorer.editConnection",
+    "onCommand:sftpExplorer.deleteConnection",
+    "onCommand:sftpExplorer.connect",
+    "onCommand:sftpExplorer.disconnect",
+    "onCommand:sftpExplorer.createFile",
+    "onCommand:sftpExplorer.createFolder",
+    "onCommand:sftpExplorer.rename",
+    "onCommand:sftpExplorer.delete",
+    "onCommand:sftpExplorer.downloadFile",
+    "onCommand:sftpExplorer.uploadFile",
+    "onCommand:sftpExplorer.openTerminal"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "sftpExplorer",
+          "name": "SFTP Explorer",
+          "when": "true",
+          "canSelectMany": true,
+          "canDragAndDrop": true
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sftpExplorer.refresh",
+        "title": "刷新",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "sftpExplorer.addConnection",
+        "title": "添加SFTP连接",
+        "icon": "$(add)"
+      },
+      {
+        "command": "sftpExplorer.editConnection",
+        "title": "编辑连接"
+      },
+      {
+        "command": "sftpExplorer.deleteConnection",
+        "title": "删除连接"
+      },
+      {
+        "command": "sftpExplorer.connect",
+        "title": "连接",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "sftpExplorer.disconnect",
+        "title": "断开连接",
+        "icon": "$(debug-disconnect)"
+      },
+      {
+        "command": "sftpExplorer.createFile",
+        "title": "新建文件",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "sftpExplorer.createFolder",
+        "title": "新建文件夹",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "sftpExplorer.rename",
+        "title": "重命名"
+      },
+      {
+        "command": "sftpExplorer.delete",
+        "title": "删除"
+      },
+      {
+        "command": "sftpExplorer.downloadFile",
+        "title": "下载文件"
+      },
+      {
+        "command": "sftpExplorer.uploadFile",
+        "title": "上传文件"
+      },
+      {
+        "command": "sftpExplorer.openTerminal",
+        "title": "在终端中打开"
+      },
+      {
+        "command": "sftpExplorer.copy",
+        "title": "复制"
+      },
+      {
+        "command": "sftpExplorer.cut",
+        "title": "剪切"
+      },
+      {
+        "command": "sftpExplorer.paste",
+        "title": "粘贴"
+      },
+      {
+        "command": "sftpExplorer.copyFromExplorer",
+        "title": "从文件浏览器复制"
+      },
+      {
+        "command": "sftpExplorer.copyToExplorer",
+        "title": "复制到文件浏览器"
+      },
+      {
+        "command": "sftpExplorer.search",
+        "title": "搜索文件",
+        "icon": "$(search)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "sftpExplorer.refresh",
+          "when": "view == sftpExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "sftpExplorer.addConnection",
+          "when": "view == sftpExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "sftpExplorer.search",
+          "when": "view == sftpExplorer",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "sftpExplorer.connect",
+          "when": "view == sftpExplorer && viewItem == connection-disconnected",
+          "group": "inline"
+        },
+        {
+          "command": "sftpExplorer.disconnect",
+          "when": "view == sftpExplorer && viewItem == connection-connected",
+          "group": "inline"
+        },
+        {
+          "command": "sftpExplorer.editConnection",
+          "when": "view == sftpExplorer && viewItem =~ /connection/",
+          "group": "management"
+        },
+        {
+          "command": "sftpExplorer.deleteConnection",
+          "when": "view == sftpExplorer && viewItem =~ /connection/",
+          "group": "management"
+        },
+        {
+          "command": "sftpExplorer.createFile",
+          "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
+          "group": "1_new"
+        },
+        {
+          "command": "sftpExplorer.createFolder",
+          "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
+          "group": "1_new"
+        },
+        {
+          "command": "sftpExplorer.rename",
+          "when": "view == sftpExplorer && viewItem =~ /(file|folder)/",
+          "group": "2_edit"
+        },
+        {
+          "command": "sftpExplorer.delete",
+          "when": "view == sftpExplorer && viewItem =~ /(file|folder)/",
+          "group": "2_edit"
+        },
+        {
+          "command": "sftpExplorer.downloadFile",
+          "when": "view == sftpExplorer && viewItem == file",
+          "group": "3_transfer"
+        },
+        {
+          "command": "sftpExplorer.uploadFile",
+          "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
+          "group": "3_transfer"
+        },
+        {
+          "command": "sftpExplorer.openTerminal",
+          "when": "view == sftpExplorer && viewItem =~ /(file|folder|connection-connected)/",
+          "group": "4_terminal"
+        },
+        {
+          "command": "sftpExplorer.copy",
+          "when": "view == sftpExplorer && viewItem =~ /(file|folder)/",
+          "group": "5_clipboard"
+        },
+        {
+          "command": "sftpExplorer.cut",
+          "when": "view == sftpExplorer && viewItem =~ /(file|folder)/",
+          "group": "5_clipboard"
+        },
+        {
+          "command": "sftpExplorer.paste",
+          "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
+          "group": "5_clipboard"
+        },
+        {
+          "command": "sftpExplorer.copyToExplorer",
+          "when": "view == sftpExplorer && viewItem =~ /(file|folder)/",
+          "group": "6_crossEnv"
+        },
+        {
+          "command": "sftpExplorer.search",
+          "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
+          "group": "7_search"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "sftpExplorer.rename",
+        "key": "F2",
+        "when": "view == sftpExplorer && viewItem =~ /(file|folder)/"
+      },
+      {
+        "command": "sftpExplorer.delete",
+        "key": "Delete",
+        "when": "view == sftpExplorer && viewItem =~ /(file|folder)/"
+      },
+      {
+        "command": "sftpExplorer.copy",
+        "key": "ctrl+c",
+        "mac": "cmd+c",
+        "when": "view == sftpExplorer && viewItem =~ /(file|folder)/"
+      },
+      {
+        "command": "sftpExplorer.cut",
+        "key": "ctrl+x",
+        "mac": "cmd+x",
+        "when": "view == sftpExplorer && viewItem =~ /(file|folder)/"
+      },
+      {
+        "command": "sftpExplorer.paste",
+        "key": "ctrl+v",
+        "mac": "cmd+v",
+        "when": "view == sftpExplorer && viewItem =~ /folder/"
+      }
+    ],
+    "configuration": {
+      "title": "SFTP Explorer",
+      "properties": {
+        "sftpExplorer.connections": {
+          "type": "array",
+          "default": [],
+          "description": "SFTP连接配置列表",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "连接名称"
+              },
+              "host": {
+                "type": "string",
+                "description": "服务器地址"
+              },
+              "port": {
+                "type": "number",
+                "default": 22,
+                "description": "端口号"
+              },
+              "username": {
+                "type": "string",
+                "description": "用户名"
+              },
+              "password": {
+                "type": "string",
+                "description": "密码(不推荐，请使用密钥)"
+              },
+              "privateKeyPath": {
+                "type": "string",
+                "description": "私钥文件路径"
+              },
+              "remotePath": {
+                "type": "string",
+                "default": "/",
+                "description": "远程目录路径"
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "sftp"
+                ],
+                "default": "sftp",
+                "description": "传输协议"
+              }
+            }
+          }
+        },
+        "sftpExplorer.autoSync": {
+          "type": "boolean",
+          "default": true,
+          "description": "自动同步远程文件修改"
+        },
+        "sftpExplorer.showHiddenFiles": {
+          "type": "boolean",
+          "default": false,
+          "description": "显示隐藏文件"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "package:analyze": "npm run package && npx vsce package --out dist/",
+    "size-check": "du -sh node_modules/ && echo '--- After .vscodeignore filtering ---' && tar --exclude-from=.vscodeignore -czf test-package.tar.gz . && ls -lh test-package.tar.gz && rm test-package.tar.gz"
+  },
+  "dependencies": {
+    "node-abort-controller": "^3.1.1",
+    "node-ssh": "^13.2.0",
+    "ssh2": "^1.15.0",
+    "ssh2-sftp-client": "^10.0.3"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/ssh2": "^1.15.1",
+    "@types/ssh2-sftp-client": "^9.0.4",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "prettier": "^3.5.3",
+    "tap": "^21.1.0",
+    "ts-loader": "^9.5.2",
+    "tshy": "^3.0.2",
+    "typescript": "^5.8.3",
+    "typedoc": "^0.28.5",
+    "webpack": "^5.99.7",
+    "webpack-cli": "^6.0.1"
+  }
+}
