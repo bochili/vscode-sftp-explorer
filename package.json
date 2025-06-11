@@ -30,7 +30,8 @@
     "onCommand:sftpExplorer.delete",
     "onCommand:sftpExplorer.downloadFile",
     "onCommand:sftpExplorer.uploadFile",
-    "onCommand:sftpExplorer.openTerminal"
+    "onCommand:sftpExplorer.openTerminal",
+    "onCommand:sftpExplorer.refreshFolder"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -128,6 +129,11 @@
         "command": "sftpExplorer.search",
         "title": "搜索文件",
         "icon": "$(search)"
+      },
+      {
+        "command": "sftpExplorer.refreshFolder",
+        "title": "刷新文件夹",
+        "icon": "$(refresh)"
       }
     ],
     "menus": {
@@ -228,6 +234,11 @@
           "command": "sftpExplorer.search",
           "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
           "group": "7_search"
+        },
+        {
+          "command": "sftpExplorer.refreshFolder",
+          "when": "view == sftpExplorer && viewItem =~ /(folder|connection-connected)/",
+          "group": "0_refresh"
         }
       ]
     },

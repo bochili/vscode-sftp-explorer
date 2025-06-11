@@ -61,6 +61,28 @@ function registerCommands(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage("SFTP Explorer 已刷新");
     }),
 
+    vscode.commands.registerCommand(
+      "sftpExplorer.refreshFolder",
+      async (item: TreeItem) => {
+        if (item && item.connectionName) {
+          if (
+            item.itemType === "folder" ||
+            item.itemType.includes("connection")
+          ) {
+            const pathToRefresh = item.remotePath || "/";
+            treeDataProvider.refreshPath(item.connectionName, pathToRefresh);
+            vscode.window.showInformationMessage(
+              `已刷新文件夹: ${pathToRefresh}`
+            );
+          } else {
+            vscode.window.showWarningMessage("请在文件夹上使用刷新功能");
+          }
+        } else {
+          vscode.window.showErrorMessage("未找到有效的文件夹信息");
+        }
+      }
+    ),
+
     vscode.commands.registerCommand("sftpExplorer.addConnection", async () => {
       await showConnectionDialog();
     }),
